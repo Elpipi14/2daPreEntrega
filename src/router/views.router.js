@@ -37,5 +37,13 @@ router.get('/cart', async (req, res) => {
         res.status(500).send('Error interno del servidor');
     }
 });
+
+router.get('/user', async (req, res) => {
+    res.render('partials/login');
+});
+
+router.get('/register', async (req, res) => {
+    res.render('partials/register');
+});
 export default router;
 

@@ -40,3 +40,20 @@ const httpSever = app.listen(8080, () => {
 });
 
 
+import cookieParser from "cookie-parser";
+const secretKey = "1234"
+app.use(cookieParser(secretKey));
+
+app.get("/set-cookie", (req, res) => {
+    res.cookies('idioma', 'ingles').json({ msg: "Ok" });
+});
+
+app.get("/cookie", (req, res) => {
+    console.log(req.cookies);
+    const { idioma } = req.cookies
+    idioma === 'ingles' ? res.send('hello human') : res.send('hola humano')
+});
+
+app.get("/set-signed-cookie", (req, res) => {
+    res.cookie("nombre", "andres", { signed: true }).json({ msg: "ok" })
+})
