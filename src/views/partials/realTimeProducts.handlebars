@@ -1,9 +1,35 @@
   <div class="list_container">
          <h1 class="title">Socket.io Products Ecommerce</h1>
+        <h2 class="title">Add Product</h2>
+        <form id="form" action="procesar_producto.php" method="post" enctype="multipart/form-data">
+            <div class="data">
+                <label for="title">ID:</label>
+                <input type="text" name="id" id="id" required>
+                
+                <label for="title">TITLE:</label>
+                <input type="text" name="title" id="title" required>
+
+                <label for="price">PRICE:</label>
+                <input type="number" name="price" id="price" required>
+
+                <label for="category">CATEGORY:</label>
+                <input type="text" name="category" id="category" required>
+
+                <label for="stock">STOCK:</label>
+                <input type="number" name="stock" id="stock" required>
+
+                <label for="image">URL IMG:</label>
+                <input type="url" name="image" id="image" required>
+                
+                <br></br>
+                <input type="submit" value="ADD PRODUCT">
+            </div>
+        </form>
+    </div>
 
     <h2 class="title">List Products</h2>
 
     <div id="products"></div>
 
-
-<script src="../../public/js/addProd.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/products.js"></script>

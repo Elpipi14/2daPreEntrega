@@ -1,4 +1,4 @@
-import ProductMongoDB from "../daos/mongoseDb/Products/products.mongose.js";
+import ProductMongoDB from "../daos/mongoseDb/DB/products.mongose.js";
 const prodDao = new ProductMongoDB();
 
 // import { ProductManager } from "../daos/fileSystem/manager/productsManager.js";

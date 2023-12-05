@@ -2,51 +2,26 @@ import { ProductModel } from "../models/products.models.js";
 
 export default class ProductMongoDB {
 
-  async getAll(page = 1, limit = 10, category, sortOrder) {
-    try {
-      // Configurar la consulta según los parámetros proporcionados
-      const query = category ? { category } : {};
-      const sort = {};
-
-      // Configurar el orden según el parámetro de consulta
-      if (sortOrder === 'asc') {
-        sort.price = 1;
-      } else if (sortOrder === 'desc') {
-        sort.price = -1;
-      }
-
-      // Realizar la consulta paginada
-      const response = await ProductModel.paginate(query, { page, limit, sort });
-
-      // Aplicar lean() a los documentos de la respuesta
-      const leanResponse = response.docs.map(doc => doc.toObject());
-
-      // Construir los enlaces directos a las páginas previa y siguiente
-      const nextLink = response.hasNextPage ? `/api/products?page=${response.nextPage}` : null;
-      const prevLink = response.hasPrevPage ? `/api/products?page=${response.prevPage}` : null;
-
-      // Construir y devolver el objeto de respuesta formateado
-      return {
-        status: 'success',
-        payload: {
-          products: leanResponse,
+    async getAll(page = 1, limit = 10) {
+      try {
+        const response = await ProductModel.paginate({}, { page, limit, sort: { price: 1 }  });
+        const next = response.hasNextPage ? `http://localhost:8080/api/products?page=${response.nextPage}` : null;
+        const prev = response.hasPrevPage ? `http://localhost:8080/api/products?page=${response.prevPage}` : null;
+        return {
+          payload: response.docs,
           info: {
-            count: response.docs.length,
+            count: response.docs.length, 
             pages: response.totalPages,
-            page: response.page,
-            hasNextPage: response.hasNextPage,
-            hasPrevPage: response.hasPrevPage,
-            nextLink,
-            prevLink,
-          },
-        },
-      };
-    } catch (error) {
-      console.error('Error en getAll:', error.message);
-      throw new Error('Error al recuperar la lista de productos.');
+            next,
+            prev
+          }
+        };
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
     }
-  }
-
+  
   async getById(id) {
     try {
       const response = await ProductModel.findById(id);
@@ -91,7 +66,7 @@ export default class ProductMongoDB {
           $match: { category: category }
         },
         {
-          $sort: { price: 1 }
+          $sort: { price: 1 } 
         },
       ]);
 

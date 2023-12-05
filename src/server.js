@@ -1,8 +1,10 @@
 import express from "express";
+import cookieParser from "cookie-parser";
+import session from "express-session";
+import { mongoStoreOptions } from "./utils.js";
 import { __dirname } from "./utils.js";
 import handlebars from 'express-handlebars'
 import viewRouter from './router/views.router.js';
-import { Server } from "socket.io"
 
 //Conexion con mongo y logica para trabjar con post
 import { initMongoDB } from "./daos/mongoseDb/connection.Mongose.js";
@@ -29,6 +31,14 @@ app.set('view engine', 'handlebars');
 app.use('/', viewRouter);
 app.use(errorHandler);
 
+//LOGIN
+import routerUser from "./router/user.route.js";
+
+app.use(cookieParser());
+app.use(session(mongoStoreOptions));
+app.use('/', routerUser);
+
+
 //Router Mongo
 initMongoDB()
 app.use('/api/products', routerMongo);
@@ -38,22 +48,3 @@ app.use('/api/carts', routerCart);
 const httpSever = app.listen(8080, () => {
     console.log("escuchando al puerto 8080");
 });
-
-
-import cookieParser from "cookie-parser";
-const secretKey = "1234"
-app.use(cookieParser(secretKey));
-
-app.get("/set-cookie", (req, res) => {
-    res.cookies('idioma', 'ingles').json({ msg: "Ok" });
-});
-
-app.get("/cookie", (req, res) => {
-    console.log(req.cookies);
-    const { idioma } = req.cookies
-    idioma === 'ingles' ? res.send('hello human') : res.send('hola humano')
-});
-
-app.get("/set-signed-cookie", (req, res) => {
-    res.cookie("nombre", "andres", { signed: true }).json({ msg: "ok" })
-})

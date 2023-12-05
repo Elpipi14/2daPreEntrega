@@ -1,5 +1,5 @@
 
-import CartMongoDB from "../daos/mongoseDb/Products/carts.mongose.js";
+import CartMongoDB from "../daos/mongoseDb/DB/carts.mongose.js";
 const cartDao = new CartMongoDB();
 
 // import { CartManager } from "../daos/fileSystem/manager/cartManager.js";

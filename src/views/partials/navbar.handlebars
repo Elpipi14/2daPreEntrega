@@ -8,7 +8,7 @@
                 <a class="a" href="/">Home</a>
                 </li>
                 <li>
-                <a class="a" href="/product">Products</a>
+                <a class="a" href="/products">Products</a>
                 <ul class="nav__sub">
                     <li><a href="/">Temporada 2023</a></li>
                     <li><a href="/">Temporada 2024</a></li>
@@ -20,9 +20,19 @@
         </ul>
 
         <div class="cart__navbar">
-                <a href="/user" class="user">
-                    <box-icon type='solid' name='user'></box-icon>
-                </a>
+            <div class="nav">
+                <ul style="margin-top: 1.5rem;">
+                    <li>
+                        <a class="a" href="/login" class="user">
+                            <box-icon type='solid' name='user'></box-icon>
+                        </a>
+                        <ul class="nav__sub">
+                            <li><a href="/profile">Profile</a></li>
+                            <li><a href="/logout">Log Out</a></li>   
+                        </ul>
+                    </li>
+                </ul>    
+            </div>
                 <a href="/cart">
                     <box-icon box-icon name="cart"></box-icon>
                 </a>

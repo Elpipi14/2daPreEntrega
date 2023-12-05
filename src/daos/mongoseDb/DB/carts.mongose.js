@@ -23,18 +23,18 @@ export default class CartMongoDB {
             if (!product) {
                 throw new Error(`Product not found for ID: ${productId}`);
             }
-    
+
             let cart = await CartModel.findById(cartId);
             if (!cart) {
                 throw new Error(`Cart not found for ID: ${cartId}`);
             }
-    
+
             if (!cart.products) {
                 cart.products = [];
             }
-    
+
             const existingProductIndex = cart.products.findIndex(item => item.product.equals(productId));
-    
+
             if (existingProductIndex !== -1) {
                 cart.products[existingProductIndex].quantity += 1;
             } else {
@@ -50,13 +50,14 @@ export default class CartMongoDB {
             throw error;
         }
     }
-    
+
     async getCart() {
         try {
-            const response = await CartModel.find({});
+            const response = await CartModel.find({}).populate('products.product');
             return response;
         } catch (error) {
             console.log(error);
+            throw error;
         }
     }
 
@@ -105,24 +106,5 @@ export default class CartMongoDB {
             throw error;
         }
     }
-
-    async updateProductQuantity(cartId, productId, newQuantity) {
-        try {
-          const updatedCart = await CartModel.findOneAndUpdate(
-            { _id: cartId, 'products.product': productId },
-            { $set: { 'products.$.quantity': newQuantity } },
-            { new: true }
-          );
-      
-          if (!updatedCart) {
-            throw new Error(`Cart or product not found for IDs: ${cartId}, ${productId}`);
-          }
-      
-          return updatedCart;
-        } catch (error) {
-          console.error(error);
-          throw error;
-        }
-      }
 
 }

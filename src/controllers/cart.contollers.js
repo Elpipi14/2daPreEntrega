@@ -1,4 +1,3 @@
-// controllers/cart.controllers.js
 import * as cartService from "../service/cart.service.js";
 
 export const createCart = async (req, res, next) => {

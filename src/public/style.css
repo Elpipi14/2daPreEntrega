@@ -49,8 +49,8 @@ li a {
     margin-right: 2rem;
 }
 
-.bg-image {
-    padding-top: 1rem;
+.form-outline input{
+    text-align: center !important;
 }
 
 .a {
