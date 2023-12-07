@@ -14,16 +14,24 @@ export default class UserMongoDB {
 
   async register(user) {
     try {
-      const { email, password } = user;
-      const exist = await this.findByEmail(email);
+      const userExist = await UserModel.findOne({ email: email });
 
-      if (!exist) {
-        // Encriptar la contraseña antes de almacenarla en la base de datos
-        const hashedPassword = await bcrypt.hash(password, 10);
-        await UserModel.create({ ...user, password: hashedPassword });
-        return true;
-      } else {
-        return false;
+      if (userExist) {
+        console.log('Provided password:', password);
+        console.log('Hashed password from database:', userExist.password);
+
+        // Verificar la contraseña utilizando bcrypt.compare
+        const passwordMatch = await bcrypt.compare(password, userExist.password);
+
+        console.log('Password match:', passwordMatch);
+
+        if (passwordMatch) {
+          return userExist;
+        }
+      }
+
+      else {
+        return null;
       }
     } catch (error) {
       console.log(error);

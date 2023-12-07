@@ -49,7 +49,7 @@ router.get('/cart', async (req, res) => {
 });
 
 //Login
-router.get('/login', publicRoute, async (req, res) => {
+router.get('/login', async (req, res) => {
     res.render('partials/login');
 });
 
@@ -59,7 +59,7 @@ router.get('/register', async (req, res) => {
 });
 
 router.get('/profile', validateLogin, async (req, res) => {
-    res.render('partials/profile');
+    res.render('partials/perfil');
 });
 
 router.get('/register-error', async (req, res) => {

@@ -8,17 +8,17 @@ import MongoStore from "connect-mongo";
 import { connectionString } from './daos/mongoseDb/connection.Mongose.js';
 
 export const mongoStoreOptions = {
-    store: MongoStore.create({
-      mongoUrl: connectionString,
-      ttl: 120,
-      crypto: {
-        secret: '1234'
-      }
-    }),
-    secret: "1234",
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      maxAge: 120000,
-    },
-  };
+  store: MongoStore.create({
+    mongoUrl: connectionString,
+    ttl: 120,
+    crypto: {
+      secret: '1234'
+    }
+  }),
+  secret: "1234",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 60000,
+  },
+};

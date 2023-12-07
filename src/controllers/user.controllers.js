@@ -22,9 +22,10 @@ export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await userService.login(email, password);
-
     if (user) {
       req.session.user = user; // Configurar la sesión con el usuario
+      req.session.save(); // Guardar la sesión
+      console.log(`${req.sessionID}, usuario`); // Verificar el ID de sesión
       res.redirect("/products");
     } else {
       res.redirect("/register-error");
@@ -40,7 +41,7 @@ export const login = async (req, res, next) => {
 export const logout = (req, res) => {
   console.log("Antes de destruir la sesión");
   req.session.destroy(() => {
-    console.log("Después de destruir la sesión");
+    console.log(`Después de destruir la sesión`);
     res.redirect("/login");
   });
 };

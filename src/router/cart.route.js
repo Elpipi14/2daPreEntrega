@@ -17,7 +17,7 @@ routerCart.get("/", cartController.getCart);
 routerCart.get("/:cId", cartController.getCartById);
 
 // Eliminar producto individual por ID de carrito y producto
-routerCart.delete("/:cId/products/:pId", cartController.deleteProduct);
+routerCart.delete("/:cId/products/:pId", cartController.deleteProduct); //_id producto del carrito
 
 // Eliminar carrito por ID
 routerCart.delete("/:cId", cartController.deleteCart);
